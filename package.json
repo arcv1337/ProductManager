@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/arcv1337/ProductManager/issues"
   },
-  "homepage": "https://github.com/arcv1337/ProductManager#readme"
+  "homepage": "https://github.com/arcv1337/ProductManager#readme",
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }

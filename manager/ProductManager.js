@@ -30,23 +30,29 @@ export default class ProductManager {
   };
 
 
-  updateProduct(id_product) {
-    let updateById = this.products.find((product) => product.id === id_product);  
+   updateProducts = async (id_product) => {
+    const productos = await this.getProducts();
+    let updateById = productos.find((product) => product.id === id_product);  
     // Actualizamos el stock
-    updateById.stock  = '5';
+    updateById.stock = 1;
     if (updateById) {
-      return updateById;
-    } else {
+      await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
+      productos.push(updateById);
+      await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
+      console.log("El producto se modificó con exito")
+    } 
+    else
+     {
       return console.log("No existe producto con ese número de ID");
     }
-  }
+  };
 
-  deleteProduct(id_product) {
-    const productos = this.getProducts();
+  deleteProducts = async (id_product) => {
+    const productos = await this.getProducts();
     const index = productos.findIndex(product => product.id === id_product);
     if (index !== -1) {
       const deletedProduct = productos.splice(index, 1)[0];
-      fs.writeFileSync(this.path, JSON.stringify(productos));
+      await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
       return deletedProduct;
     }
   }
