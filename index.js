@@ -6,7 +6,7 @@ const productManager = new ProductManager();
 const env = async () => {
 
     let productos = await productManager.getProducts();
-    console.log(productos) //[]
+    /* console.log(productos) */ //[]
 
      let producto = {
         titulo: 'Arroz',
@@ -19,13 +19,15 @@ const env = async () => {
     await productManager.addProducts(producto)
     productos = await productManager.getProducts();
 
-    console.log(productos);
-
+ /*    console.log(productos);
+ */
 
 }
 
-productManager.updateProducts(1)
-let test = await productManager.getProducts();
-console.log(test)
-let test2 = await productManager.getProducts();
-console.log(test2)
+
+let prod1 = await productManager.getProductById(1);
+
+let prod1Update = await productManager.updateProducts(prod1, 'Pepino', 'Descripcion', 300);
+
+console.log(prod1Update);
+

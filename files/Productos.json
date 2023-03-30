@@ -1,11 +1,11 @@
 [
 	{
-		"titulo": "Arroz",
-		"descripcion": "dsfjdsf",
-		"precio": 500,
+		"titulo": "Pepino",
+		"descripcion": "Descripcion",
+		"precio": 300,
 		"thumbnail": "dsfds",
 		"code": 3150,
-		"stock": 1,
+		"stock": 0,
 		"id": 1
 	},
 	{
@@ -14,7 +14,16 @@
 		"precio": 500,
 		"thumbnail": "dsfds",
 		"code": 3150,
-		"stock": 1,
-		"id": 1
+		"stock": 0,
+		"id": 2
+	},
+	{
+		"titulo": "Arroz",
+		"descripcion": "dsfjdsf",
+		"precio": 500,
+		"thumbnail": "dsfds",
+		"code": 3150,
+		"stock": 0,
+		"id": 3
 	}
 ]

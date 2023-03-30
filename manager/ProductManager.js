@@ -14,6 +14,19 @@ export default class ProductManager {
     }
   };
 
+  getProductById = async (idProducto) => {
+    let producto = await this.getProducts();
+    let productById = producto.find((producto) => producto.id === idProducto);
+   /*  console.log(productById); */
+        if (productById) {
+          return productById;
+        }
+        else  {
+          return console.log("Producto no encontrado");
+        }
+ };
+    
+
   addProducts = async (product) => {
     const products = await this.getProducts();
     if (products.length === 0) {
@@ -30,21 +43,20 @@ export default class ProductManager {
   };
 
 
-   updateProducts = async (id_product) => {
+  updateProducts = async (newProduct, newTitle, newDesc, newPrice) => {
     const productos = await this.getProducts();
-    let updateById = productos.find((product) => product.id === id_product);  
-    // Actualizamos el stock
-    updateById.stock = 1;
-    if (updateById) {
-      await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
-      productos.push(updateById);
-      await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
-      console.log("El producto se modificó con exito")
-    } 
-    else
-     {
-      return console.log("No existe producto con ese número de ID");
+    const productToUpdate = productos.findIndex((product) => product.id === newProduct.id);
+   
+    if (!productToUpdate === -1) {
+      return "Producto no encontrado";
     }
+    newProduct.titulo = newTitle;
+    newProduct.descripcion = newDesc;
+    newProduct.precio = newPrice;
+    productos[productToUpdate] = { ...productos[productToUpdate], ...newProduct };
+    await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
+    
+    return newProduct;
   };
 
   deleteProducts = async (id_product) => {
