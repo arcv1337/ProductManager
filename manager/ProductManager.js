@@ -1,5 +1,6 @@
 import fs from "fs";
 
+
 const path = "./files/Productos.json";
 
 export default class ProductManager {
@@ -25,7 +26,7 @@ export default class ProductManager {
           return console.log("Producto no encontrado");
         }
  };
-    
+  
 
   addProducts = async (product) => {
     const products = await this.getProducts();
@@ -54,8 +55,7 @@ export default class ProductManager {
     newProduct.descripcion = newDesc;
     newProduct.precio = newPrice;
     productos[productToUpdate] = { ...productos[productToUpdate], ...newProduct };
-    await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t"));
-    
+    await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t")); 
     return newProduct;
   };
 
@@ -69,3 +69,4 @@ export default class ProductManager {
     }
   }
 }
+

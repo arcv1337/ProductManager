@@ -1,29 +1,75 @@
 [
 	{
-		"titulo": "Pepino",
-		"descripcion": "Descripcion",
-		"precio": 300,
-		"thumbnail": "dsfds",
-		"code": 3150,
-		"stock": 0,
-		"id": 1
+	  "titulo": "Laptop HP Pavilion",
+	  "descripcion": "Laptop HP Pavilion 14 con procesador Intel Core i5, 8GB de RAM y 512GB de almacenamiento SSD",
+	  "precio": 999.99,
+	  "thumbnail": "https://example.com/laptop_hp_pavilion.jpg",
+	  "code": "HP-123",
+	  "stock": 10,
+	  "id": 1
 	},
 	{
-		"titulo": "Arroz",
-		"descripcion": "dsfjdsf",
-		"precio": 500,
-		"thumbnail": "dsfds",
-		"code": 3150,
-		"stock": 0,
-		"id": 2
+	  "titulo": "Monitor LG UltraWide",
+	  "descripcion": "Monitor LG UltraWide de 29 pulgadas con resolución Full HD y tecnología IPS",
+	  "precio": 399.99,
+	  "thumbnail": "https://example.com/monitor_lg_ultrawide.jpg",
+	  "code": "LG-456",
+	  "stock": 5,
+	  "id": 2
+	  
 	},
 	{
-		"titulo": "Arroz",
-		"descripcion": "dsfjdsf",
-		"precio": 500,
-		"thumbnail": "dsfds",
-		"code": 3150,
-		"stock": 0,
-		"id": 3
+	  "titulo": "Mouse inalámbrico Logitech",
+	  "descripcion": "Mouse inalámbrico Logitech con tecnología de seguimiento óptico avanzado y diseño ergonómico",
+	  "precio": 49.99,
+	  "thumbnail": "https://example.com/mouse_logitech.jpg",
+	  "code": "LOG-789",
+	  "stock": 20,
+	  "id": 3
+	},
+	{
+	  "titulo": "Teclado mecánico Corsair",
+	  "descripcion": "Teclado mecánico Corsair con interruptores Cherry MX Red y retroiluminación LED roja",
+	  "precio": 129.99,
+	  "thumbnail": "https://example.com/teclado_corsair.jpg",
+	  "code": "COR-012",
+	  "stock": 15,
+	  "id": 4
+	},
+	{
+	  "titulo": "Audífonos Sony WH-1000XM4",
+	  "descripcion": "Audífonos inalámbricos Sony WH-1000XM4 con cancelación de ruido activa y batería de hasta 30 horas",
+	  "precio": 349.99,
+	  "thumbnail": "https://example.com/audifonos_sony.jpg",
+	  "code": "SON-345",
+	  "stock": 8,
+	  "id": 5
+	},
+	{
+	  "titulo": "Smartwatch Apple Watch Series 7",
+	  "descripcion": "Smartwatch Apple Watch Series 7 con pantalla siempre activa y seguimiento de actividad avanzado",
+	  "precio": 499.99,
+	  "thumbnail": "https://example.com/smartwatch_apple_watch.jpg",
+	  "code": "APP-678",
+	  "stock": 3,
+	  "id": 6
+	},
+	{
+	  "titulo": "Cámara DSLR Canon EOS Rebel T8i",
+	  "descripcion": "Cámara DSLR Canon EOS Rebel T8i con sensor CMOS de 24.1 megapíxeles y grabación de video en 4K",
+	  "precio": 899.99,
+	  "thumbnail": "https://example.com/camara_canon_eos.jpg",
+	  "code": "CAN-901",
+	  "stock": 7,
+	  "id": 7
+	},
+	{
+	  "titulo": "Tablet Samsung Galaxy Tab S7",
+	  "descripcion": "Tablet Samsung Galaxy Tab S7 con pantalla de 11 pulgadas y S Pen incluido",
+	  "precio": 649.99,
+	  "thumbnail": "https://example.com/tablet_samsung_galaxy.jpg",
+	  "code": "SAM-234",
+	  "stock": 12,
+	  "id": 8
 	}
-]
+	]
