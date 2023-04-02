@@ -32,12 +32,16 @@ app.get('/products/:pid', async (req, res) => {
   let products = JSON.parse(data);
   let product = products.find(p => p.id === parseInt(pid));
   if (product) {
-    res.json(product);
+    res.send(`
+      <h1>${product.titulo}</h1>
+      <p>${product.descripcion}</p>
+      <p>Precio: ${product.precio}</p>
+      <img src="${product.thumbnail}">
+    `);
   } else {
     res.status(404).send('Producto no encontrado');
   }
 });
-
 const port = 3000;
 
 app.listen(port, () => {
