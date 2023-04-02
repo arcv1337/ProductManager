@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/arcv1337/ProductManager#readme",
   "dependencies": {
+    "handlebars": "^4.7.7",
     "react-scripts": "^5.0.1"
   }
 }
