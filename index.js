@@ -10,14 +10,14 @@ const PRODUCTS_FILE = './files/Productos.json';
 
 
 
-// La ruta '/products' ahora devuelve el archivo index.html\n
+
 app.get('/products', (req, res) => {
   const publicDirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')
   app.use(express.static(publicDirPath));   
   res.sendFile(path.join(publicDirPath, 'index.html'));
 });
 
-// La ruta raíz muestra una vista con una breve introducción
+
 app.get('/', (req, res) => {
   res.send(`
     <div style="text-align:center;">
@@ -28,13 +28,13 @@ app.get('/', (req, res) => {
   `);
 });
 
-// Endpoint para obtener todos los productos
+
 app.get('/api/products', async (req, res) => {
   const products = await productManager.getProducts();
   res.json(products);
 });
 
-// Endpoint para obtener un producto por su ID
+
 app.get('/api/products/:pid', async (req, res) => {
   const pid = req.params.pid;
   const products = await productManager.getProducts();
@@ -46,7 +46,7 @@ app.get('/api/products/:pid', async (req, res) => {
   }
 });
 
-// Endpoint para obtener el detalle de un producto por su ID
+
 app.get('/products/:pid', async (req, res) => {
   let pid = req.params.pid;
   let data = await fs.readFile(PRODUCTS_FILE);
