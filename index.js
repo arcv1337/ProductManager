@@ -3,22 +3,94 @@ import ProductManager from './manager/ProductManager.js';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
+const port = 8000;
 const app = express();
 const productManager = new ProductManager();
 const PRODUCTS_FILE = './files/Productos.json';
 
+app.use(express.urlencoded({extended:true}))
+
+
+app.listen(port, () => {
+  console.log(`Servidor corriendo en el puerto ${port}`);
+});
 
 
 
-app.get('/products', (req, res) => {
+/* app.get('/products', (req, res) => {
   const publicDirPath = path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')
   app.use(express.static(publicDirPath));   
   res.sendFile(path.join(publicDirPath, 'index.html'));
 });
+ */
+
+app.get('/products/:id', async (req,res)=>{
+
+  const id = req.params.id;
+  const products = await productManager.getProducts();
+  const product = products.find(p => p.id === parseInt(id));
+  if (product) {
+    res.json(product);
+  } else {
+    res.status(404).send('Producto no encontrado');
+  }
+
+})
+
+app.get('/eliminar/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  const deletedProduct = await productManager.deleteProducts(id);
+  if (deletedProduct) {
+    res.send(`El producto con el id ${id} ha sido eliminado`);
+  } else {
+    res.send(`No existe un producto con el id ${id}`);
+  }
+});
+
+app.get('/', async (req,res)=>{
+  const productos = await productManager.getProducts();
+  res.send(productos)
+})
 
 
-app.get('/', (req, res) => {
+app.get('/newquery', async (req, res) => {
+  const { titulo, descripcion, precio, thumbnail, code, stock } = req.query;
+
+  if (!titulo || !descripcion || !precio || !thumbnail || !code || !stock) {
+    res.send('Faltan datos');
+    return;
+  }
+
+  const product = {
+    titulo,
+    descripcion,
+    precio,
+    thumbnail,
+    code,
+    stock
+  };
+
+  const msg = await productManager.addProducts(product);
+  res.send(msg);
+});
+
+
+app.get('/editquery', async (req, res) => {
+
+  const { id, titulo, descripcion, precio, thumbnail, code, stock } = req.query;
+
+  if ( !id || !titulo || !descripcion || !precio || !thumbnail || !code || !stock) {
+    res.send('Faltan datos');
+    return;
+  }
+
+  const msg = await productManager.updateProducts(id, titulo, descripcion, precio, thumbnail, code, stock);
+
+  res.send(msg);  
+
+});
+
+/* app.get('/', (req, res) => {
   res.send(`
     <div style="text-align:center;">
       <h1>Bienvenido a nuestra tienda en línea</h1>
@@ -27,9 +99,9 @@ app.get('/', (req, res) => {
     </div>
   `);
 });
+ */
 
-
-app.get('/api/products', async (req, res) => {
+/* app.get('/api/products', async (req, res) => {
   const products = await productManager.getProducts();
   res.json(products);
 });
@@ -44,10 +116,12 @@ app.get('/api/products/:pid', async (req, res) => {
   } else {
     res.status(404).send('Producto no encontrado');
   }
-});
+}); */
 
 
-app.get('/products/:pid', async (req, res) => {
+
+
+/* app.get('/products/:pid', async (req, res) => {
   let pid = req.params.pid;
   let data = await fs.readFile(PRODUCTS_FILE);
   let products = JSON.parse(data);
@@ -62,13 +136,9 @@ app.get('/products/:pid', async (req, res) => {
   } else {
     res.status(404).send('Producto no encontrado');
   }
-});
+}); */
 
-const port = 3000;
 
-app.listen(port, () => {
-  console.log(`Servidor corriendo en el puerto ${port}`);
-});
 
 const env = async () => {
   let productos = await productManager.getProducts();
@@ -83,12 +153,8 @@ const env = async () => {
   await productManager.addProducts(producto)
   productos = await productManager.getProducts();
 }
+/* 
 
-
-/* let prod1 = await productManager.getProductById(1);
-
-let prod1Update = await productManager.updateProducts(prod1, 'Pepino', 'Descripcion', 300);
-
-console.log(prod1Update);
-
+const updatedProduct = await productManager.updateProducts(9, 'fdsfsd', 'nada', 400, 'nada', 'nada', 0);
+console.log(updatedProduct);
  */

@@ -44,19 +44,29 @@ export default class ProductManager {
   };
 
 
-  updateProducts = async (newProduct, newTitle, newDesc, newPrice) => {
-    const productos = await this.getProducts();
-    const productToUpdate = productos.findIndex((product) => product.id === newProduct.id);
-   
-    if (!productToUpdate === -1) {
+  updateProducts = async (id, titulo, descripcion, precio, thumbnail, code, stock) => {
+    const products = await this.getProducts();
+    const productToUpdate = products.findIndex((product) => product.id === id);
+    console.log(products)
+    if (productToUpdate === -1) {
       return "Producto no encontrado";
     }
-    newProduct.titulo = newTitle;
-    newProduct.descripcion = newDesc;
-    newProduct.precio = newPrice;
-    productos[productToUpdate] = { ...productos[productToUpdate], ...newProduct };
-    await fs.promises.writeFile(path, JSON.stringify(productos, null, "\t")); 
-    return newProduct;
+  
+    const updatedProduct = {
+      ...products[productToUpdate],
+      titulo: titulo,
+      descripcion: descripcion,
+      precio: precio,
+      thumbnail: thumbnail,
+      code: code,
+      stock: stock
+    };
+  
+    products[productToUpdate] = updatedProduct;
+  
+    await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
+  
+    return updatedProduct;
   };
 
   deleteProducts = async (id_product) => {
