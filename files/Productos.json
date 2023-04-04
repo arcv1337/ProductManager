@@ -18,12 +18,12 @@
 		"id": 3
 	},
 	{
-		"titulo": "Teclado mecánico Corsair",
-		"descripcion": "Teclado mecánico Corsair con interruptores Cherry MX Red y retroiluminación LED roja",
-		"precio": 129.99,
-		"thumbnail": "https://example.com/teclado_corsair.jpg",
-		"code": "COR-012",
-		"stock": 15,
+		"titulo": "asdasd",
+		"descripcion": "Tomate Rojo",
+		"precio": "800",
+		"thumbnail": "Ninguna",
+		"code": "0044",
+		"stock": "40",
 		"id": 4
 	},
 	{

@@ -47,7 +47,6 @@ export default class ProductManager {
   updateProducts = async (id, titulo, descripcion, precio, thumbnail, code, stock) => {
     const products = await this.getProducts();
     const productToUpdate = products.findIndex((product) => product.id === id);
-    console.log(products)
     if (productToUpdate === -1) {
       return "Producto no encontrado";
     }
@@ -61,9 +60,9 @@ export default class ProductManager {
       code: code,
       stock: stock
     };
-  
+    console.log(updatedProduct);
     products[productToUpdate] = updatedProduct;
-  
+    
     await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
   
     return updatedProduct;

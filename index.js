@@ -24,6 +24,18 @@ app.listen(port, () => {
 });
  */
 
+app.get('/products/', async (req, res) => {
+  const limit = req.query.limit ? parseInt(req.query.limit) : undefined; 
+  const products = await productManager.getProducts();
+  
+  if (limit) {
+    const limitedProducts = products.slice(0, limit);
+    res.json(limitedProducts);
+  } else {
+    res.status(400).send('Debe especificar un valor para el parámetro limit');
+  }
+});
+
 app.get('/products/:id', async (req,res)=>{
 
   const id = req.params.id;
@@ -76,19 +88,27 @@ app.get('/newquery', async (req, res) => {
 
 
 app.get('/editquery', async (req, res) => {
+  try {
+    const { id, titulo, descripcion, precio, thumbnail, code, stock } = req.query;
+    console.log(id, titulo, descripcion, precio, thumbnail, code, stock);
 
-  const { id, titulo, descripcion, precio, thumbnail, code, stock } = req.query;
+    if (!titulo || !descripcion || !precio || !thumbnail || !code || !stock || !id) {
+      console.log('Datos faltantes');
+      res.send('Faltan datos');
+      return;
+    }
+    
+    const parsedId = parseInt(id);
+    const msg = await productManager.updateProducts(parsedId, titulo, descripcion, precio, thumbnail, code, stock);
+    console.log(msg);
 
-  if ( !id || !titulo || !descripcion || !precio || !thumbnail || !code || !stock) {
-    res.send('Faltan datos');
-    return;
+    res.send(msg);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Ha ocurrido un error');
   }
-
-  const msg = await productManager.updateProducts(id, titulo, descripcion, precio, thumbnail, code, stock);
-
-  res.send(msg);  
-
 });
+
 
 /* app.get('/', (req, res) => {
   res.send(`
