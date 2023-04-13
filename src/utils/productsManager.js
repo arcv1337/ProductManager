@@ -15,6 +15,7 @@ export default class ProductManager {
     }
   };
 
+
   getProductById = async (idProducto) => {
     let producto = await this.getProducts();
     let productById = producto.find((producto) => producto.id === idProducto);
@@ -28,21 +29,24 @@ export default class ProductManager {
  };
   
 
-  addProducts = async (product) => {
-    const products = await this.getProducts();
-    if (products.length === 0) {
-      product.id = 1;
-    } else {
-      product.id = products[products.length - 1].id + 1;
-    }
-
-    products.push(product);
-
-    await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
-
-    return product;
+ addProducts = async ({ title, description, price, thumbnail, code, stock }) => {
+  const products = await this.getProducts();
+  const newProduct = {
+      id: (products.length + 1),
+      title,
+      description,
+      price,
+      thumbnail,
+      status: true,
+      code,
+      stock,
   };
+  products.push(newProduct);
+  await fs.promises.writeFile(path, JSON.stringify(products, null, '\t'));
+  return products;
+};
 
+  
 
   updateProducts = async (id, titulo, descripcion, precio, thumbnail, code, stock) => {
     const products = await this.getProducts();
