@@ -8,13 +8,7 @@ const CartManager = new cartManager()
 
 router.post('/', async (req, res) => {
   try {
-    const shoppingCarts = await CartManager.addShoppingCart();
-    const newShoppingCart = {
-      id: id,
-      products: []
-    };
-    shoppingCarts.push(newShoppingCart);
-    await CartManager.updateShoppingCart(shoppingCarts);
+    const newShoppingCart = await CartManager.addShoppingCart();
     res.status(201).json(newShoppingCart);
   } catch (err) {
     console.error(err);

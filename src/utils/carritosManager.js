@@ -32,19 +32,21 @@ export default class CartManager {
     };
   
     addShoppingCart = async () => {
-      const shoppingCarts = await this.getShoppingCarts();
-      const newShoppingCart = {
-        id: shoppingCarts.length + 1,
-        products: [],
+        const shoppingCarts = await this.getShoppingCarts();
+        const newShoppingCart = {
+          id: shoppingCarts.length + 1,
+          products: [],
+        };
+        shoppingCarts.push(newShoppingCart);
+        await fs.promises.writeFile(
+          path,
+          JSON.stringify(shoppingCarts, null, "\t")
+        );
+        return newShoppingCart;
+
       };
-      shoppingCarts.push(newShoppingCart);
-      await fs.promises.writeFile(
-        path,
-        JSON.stringify(shoppingCarts, null, "\t")
-      );
-      return newShoppingCart;
-    };
-  
+
+      
     updateShoppingCart = async (id, updatedFields) => {
       const shoppingCarts = await this.getShoppingCarts();
       const shoppingCartIndex = shoppingCarts.findIndex(
