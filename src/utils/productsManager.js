@@ -48,29 +48,33 @@ export default class ProductManager {
 
   
 
-  updateProducts = async (id, titulo, descripcion, precio, thumbnail, code, stock) => {
-    const products = await this.getProducts();
-    const productToUpdate = products.findIndex((product) => product.id === id);
-    if (productToUpdate === -1) {
-      return "Producto no encontrado";
-    }
-  
-    const updatedProduct = {
-      ...products[productToUpdate],
-      titulo: titulo,
-      descripcion: descripcion,
-      precio: precio,
-      thumbnail: thumbnail,
-      code: code,
-      stock: stock
-    };
-    console.log(updatedProduct);
-    products[productToUpdate] = updatedProduct;
+updateProducts = async (id, updatedFields) => {
+  const products = await this.getProducts();
+  const productIndex = products.findIndex((product) => product.id === id);
+
+  if (productIndex === -1) {
+    throw new Error('Product not found');
+  }
+
+  const product = products[productIndex];
+  const updatedProduct = {
+    id: product.id,
+    title: updatedFields.title || product.title,
+    description: updatedFields.description || product.description,
+    price: updatedFields.price || product.price,
+    thumbnail: updatedFields.thumbnail || product.thumbnail,
+    status: updatedFields.status || product.status,
+    code: updatedFields.code || product.code,
+    stock: updatedFields.stock || product.stock,
     
-    await fs.promises.writeFile(path, JSON.stringify(products, null, "\t"));
-  
-    return updatedProduct;
   };
+
+  products[productIndex] = updatedProduct;
+  await fs.promises.writeFile(path, JSON.stringify(products, null, 2));
+
+  return updatedProduct;
+};
+
 
   deleteProducts = async (id_product) => {
     const productos = await this.getProducts();
