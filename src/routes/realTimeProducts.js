@@ -22,6 +22,8 @@ router.get('/', async (req, res) => {
     });
   });
 
+
+  
   router.post('/', async (req, res) => {
     const { title, description, price, thumbnail, code, stock } = req.body;
     
@@ -33,5 +35,7 @@ router.get('/', async (req, res) => {
     
     res.redirect('/');
   });
+
+
 
 export default router;
