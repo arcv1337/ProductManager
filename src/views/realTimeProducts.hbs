@@ -1,0 +1,93 @@
+<!-- Agregar Producto -->
+<div class="card bg-secondary border-info border-3 rounded mb-3">
+  <div class="card-body">
+    <h1 class="text-light text-center mb-0">Agregar Producto</h1>
+  </div>
+</div>
+<div class="card border-info border-3 rounded mb-3">
+  <div class="card-body">
+    <form id="productForm" method="post" name="productos">
+      <div class="form-group">
+        <label for="titulo"><b>Título</b></label>
+        <input type="text" placeholder="Title" id="titulo" name="titulo" class="form-control">
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="precio"><b>Precio</b></label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input type="number" placeholder="899.99" id="precio" name="precio" class="form-control">
+          </div>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="stock"><b>Stock</b></label>
+          <input type="number" placeholder="50" id="stock" name="stock" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="descripcion"><b>Descripción</b></label>
+        <textarea placeholder="Guitarra eléctrica" id="descripcion" name="descripcion" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="code"><b>Código</b></label>
+        <input type="text" placeholder="abc005" id="code" name="code" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="thumbnail"><b>Imagen</b></label>
+        <input type="text" placeholder="https://muzikercdn.com/uploads/products/789/78991/main_9a486311.jpg" id="thumbnail" name="thumbnail" class="form-control">
+      </div>
+      <button class="btn btn-info w-100">Agregar</button>
+    </form>
+  </div>
+</div>
+<!-- Eliminar Producto -->
+<div class="card bg-warning border-danger border-3 rounded mb-3">
+  <div class="card-body">
+    <h1 class="text-light text-center mb-0">Eliminar Producto</h1>
+  </div>
+</div>
+<div class="card border-danger border-3 rounded mb-3">
+  <div class="card-body">
+    <form id="productForm2" method="post" name="productos">
+      <div class="form-group">
+        <label for="id"><b>ID</b></label>
+        <input type="text" placeholder="50" id="id" name="id" class="form-control">
+      </div>
+      <button class="btn btn-warning w-100">Eliminar</button>
+    </form>
+  </div>
+</div>
+  {{#if products}}
+  <div class="  p-1 border border-dark border-3 rounded">
+    <table class="  table table-resposive ">
+      <thead class="thead-dark text-light bg-primary">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Precio</th>
+          <th scope="col">Stock</th>
+          <th scope="col">Imagen</th>
+        </tr>
+      </thead>
+      <tbody id="prodDisplay">
+        {{#each products}}
+        <tr class="table">
+          <th>{{ this.id }}</th>
+          <td>{{ this.title }}</td>
+          <td>{{ this.price }}</td>
+          <td>{{ this.stock }}</td>
+          <td><img src="{{ this.thumbnail }}" width="50"></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    {{else}}
+    <br>
+    <h3> No hay ningún producto agregado. </h3>
+    {{/if}}
+  </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="../public/js/main.js"></script>
