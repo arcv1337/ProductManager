@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Productos en tiempo real</title>
+  </head>
+  <body>
+    <h1>Lista de productos</h1>
+    <ul>
+      {{#each products}}
+        <li>
+          {{this.title}} - ${{this.price}}
+        </li>
+      {{/each}}
+    </ul>
+    <h2>Agregar producto</h2>
+    <form action="/" method="post">
+      <label for="title">Título:</label>
+      <input type="text" name="title" id="title" required>
+      <br>
+      <label for="description">Descripción:</label>
+      <textarea name="description" id="description" required></textarea>
+      <br>
+      <label for="price">Precio:</label>
+      <input type="number" name="price" id="price" min="0" step="0.01" required>
+      <br>
+      <label for="thumbnail">URL de la imagen:</label>
+      <input type="text" name="thumbnail" id="thumbnail" required>
+      <br>
+      <label for="code">Código:</label>
+      <input type="text" name="code" id="code" required>
+      <br>
+      <label for="stock">Stock:</label>
+      <input type="number" name="stock" id="stock" min="0" required>
+      <br>
+      <input type="submit" value="Agregar">
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      socket.on('products', (products) => {
+        console.log(products);
+        // Actualizar la lista de productos en la página
+      });
+    </script>
+  </body>
+</html>

@@ -4,9 +4,10 @@ import handlebars from "express-handlebars";
 import viewRouter from "./src/routes/views.router.js";
 import carritoRouter from './src/routes/carrito.js';
 import productosRouter from './src/routes/productos.js';
+import realtimeRouter from './src/routes/realTimeProducts.js'
 import { Server, Socket } from "socket.io";
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 6060;
 const app = express();
 const server = app.listen(PORT, ()=>{
     console.log('Servidor funcionando en el puerto: ' + PORT);
@@ -24,9 +25,10 @@ app.use(express.static(__dirname + '/public'))
 
 //Rutas
 //Vistas
-app.use('/', viewRouter)
+app.use('/', viewRouter);
 app.use('/api/products', productosRouter);
 app.use('/api/carts', carritoRouter);
+app.use('/realtimeproducts', realtimeRouter);
 
 //Chat socket.io
 
@@ -46,8 +48,5 @@ io.on('connection', Socket =>{
     })
 
 })
-
-
-
 
 
