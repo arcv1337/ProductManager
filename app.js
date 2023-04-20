@@ -5,13 +5,12 @@ import viewRouter from "./src/routes/views.router.js";
 import carritoRouter from './src/routes/carrito.js';
 import productosRouter from './src/routes/productos.js';
 import realtimeRouter from './src/routes/realTimeProducts.js'
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
+import http from 'http';
 
 const PORT = process.env.PORT || 6060;
 const app = express();
-const server = app.listen(PORT, ()=>{
-    console.log('Servidor funcionando en el puerto: ' + PORT);
-})
+const httpServer = http.createServer(app);
 
 //Vistas
 app.engine('handlebars', handlebars.engine());
@@ -32,7 +31,7 @@ app.use('/realtimeproducts', realtimeRouter);
 
 //Chat socket.io
 
-const io = new Server(server);
+const io = new Server(httpServer);
 const messages = [];
 
 io.on('connection', Socket =>{
@@ -46,7 +45,11 @@ io.on('connection', Socket =>{
     Socket.on('authenticated', data =>{
         Socket.broadcast.emit('newUserConnected', data)
     })
+});
 
-})
+httpServer.listen(PORT, ()=>{
+    console.log('Servidor funcionando en el puerto: ' + PORT);
+});
+
 
 
