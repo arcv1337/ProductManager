@@ -6,7 +6,7 @@
 </div>
 <div class="card border-info border-3 rounded mb-3">
   <div class="card-body">
-    <form id="productForm" method="post" name="productos">
+    <form id="productForm" method="get" name="productos">
       <div class="form-group">
         <label for="titulo"><b>Título</b></label>
         <input type="text" placeholder="Title" id="titulo" name="titulo" class="form-control">
@@ -50,7 +50,7 @@
 </div>
 <div class="card border-danger border-3 rounded mb-3">
   <div class="card-body">
-    <form id="productForm2" method="post" name="productos">
+    <form id="productForm2" method="get" name="productos">
       <div class="form-group">
         <label for="id"><b>ID</b></label>
         <input type="text" placeholder="50" id="id" name="id" class="form-control">
@@ -90,4 +90,4 @@
   </div>
 </div>
 <script src="/socket.io/socket.io.js"></script>
-<script src="../public/js/main.js"></script>
+<script src="../socket.js"></script>
