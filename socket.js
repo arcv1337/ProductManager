@@ -13,12 +13,13 @@ export default function configureWebSocketServer(app) {
     console.log("Usuario conectado");
 
     socket.on("nuevoProducto", async (producto) => {
-      await productos.addProduct(producto);
-
-      socketServerIO.emit("actualizarTabla", await productos.getProducts());
+      await productos.addProducts(producto);
+      const newProducts = await productos.getProducts();
+      console.log(newProducts);
+      socketServerIO.emit("actualizarTabla", newProducts)
     });
     socket.on("quitarProducto", async ({ id }) => {
-      await productos.deleteById(id);
+      await productos.deleteProducts(id);
       console.log(id);
 
       socketServerIO.emit("actualizarTabla", await productos.getProducts());

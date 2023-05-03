@@ -1,10 +1,10 @@
 const socket = io();
-
+console.log('Texto')
 const form = document.getElementById("productForm");
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
-
+  console.log(form.elements)
   const title = form.elements.title.value;
   const price = form.elements.price.value;
   const description = form.elements.description.value;
@@ -35,11 +35,13 @@ form2.addEventListener("submit", (event) => {
 });
 
 socket.on("actualizarTabla", (data) => {
+  console.log(data)
   renderizarTabla(data);
 });
 
 const renderizarTabla = (data) => {
   const tbody = document.getElementById("prodDisplay");
+  console.log(tbody)
 
   const productsMap = data
     .map((item) => {
@@ -53,5 +55,6 @@ const renderizarTabla = (data) => {
   `;
     })
     .join("");
+    console.log(productsMap)
   tbody.innerHTML = productsMap;
 };
