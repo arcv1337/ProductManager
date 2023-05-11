@@ -1,4 +1,5 @@
 import express from "express";
+import mongoose from "mongoose";
 import __dirname from "./src/utils.js";
 import handlebars from "express-handlebars";
 import viewRouter from "./src/routes/views.router.js";
@@ -10,6 +11,9 @@ import configureWebSocketServer from "./socket.js";
 //Express
 const app = express();
 const PORT = 8080;
+const MONGO = 'mongodb+srv://arcv1337:9Niwihgt0VXpDPUN@ecommerce.3wbkzan.mongodb.net/?retryWrites=true&w=majority'
+
+mongoose.connect(MONGO);
 
 const { server } = configureWebSocketServer(app);
 

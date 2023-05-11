@@ -1,19 +1,19 @@
 import {Router} from 'express';
 import express from 'express';
 import cartManager from '../utils/carritosManager.js';
+import cartManagerMongo from '../utils/carritosManagerMongo.js';
 
 
 const router = Router();
 const CartManager = new cartManager()
+const CartManagerMongo = new cartManagerMongo();
 
 router.post('/', async (req, res) => {
-  try {
-    const newShoppingCart = await CartManager.addShoppingCart();
-    res.status(201).json(newShoppingCart);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
+  const respuesta = await CartManagerMongo.addShoppingCart();
+  res.status(respuesta.code).send({
+    status: respuesta.status,
+    message: respuesta.message
+  })
 });
 
 router.get('/:cid', async (req, res) => {

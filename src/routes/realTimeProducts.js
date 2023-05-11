@@ -1,6 +1,6 @@
 import { Router } from "express";
 import ProductManager from '../utils/productsManager.js';
-import configureWebSocketServer from "../socket.js";
+import configureWebSocketServer from "../../socket.js";
 const productos = new ProductManager(".../files/Productos.json");
 
 const realTime = Router();
