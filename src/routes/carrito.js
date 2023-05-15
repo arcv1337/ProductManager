@@ -16,40 +16,35 @@ router.post('/', async (req, res) => {
   })
 });
 
-router.get('/:cid', async (req, res) => {
-  try {
-    const shoppingCart = await CartManager.getShoppingCartById(req.params.cid);
-    if (shoppingCart) {
-      res.json(shoppingCart.products);
-    }
-  } catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
+router.get('/', async (req, res) => {
+  const respuesta = await CartManagerMongo.getShoppingCarts();
+  res.status(respuesta.code).send({
+    status: respuesta.status,
+    message: respuesta.message
+  })
 });
 
+
+router.get('/:cid', async (req, res) => {
+    const respuesta = await CartManagerMongo.getShoppingCartById(req.params.cid);
+    res.status(respuesta.code).send({
+      status: respuesta.status,
+      message: respuesta.message
+    })
+});
+
+
 router.post('/:cid/product/:pid', async (req, res) => {
+  const cid = req.params.cid;
+  const pid = req.params.pid;
   
-  try {
-    const shoppingCart = await CartManager.getShoppingCartById(req.params.cid);
-    if (!shoppingCart) {
-      return res.status(404).send('Shopping cart not found');
-    }
-    const productId = req.params.pid;
-    const product = { id: productId, quantity: 1 };
-    const existingProductIndex = shoppingCart.products.findIndex(p => p.id === productId);
-    if (existingProductIndex !== -1) {
-      shoppingCart.products[existingProductIndex].quantity++;
-    } else {
-      shoppingCart.products.push(product);
-    }
-    await CartManager.updateShoppingCart(shoppingCart.id, { products: shoppingCart.products });
-    res.status(201).json(product);
-  } 
-  catch (err) {
-    console.error(err);
-    res.status(500).send('Server Error');
-  }
+  const respuesta = await CartManagerMongo.updateShoppingCart(cid,pid);
+
+  res.status(respuesta.code).send({
+    status: respuesta.status,
+    message: respuesta.message
+  });
+
 });
 
 
