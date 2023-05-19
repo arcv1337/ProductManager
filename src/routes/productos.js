@@ -1,48 +1,48 @@
 import { Router } from 'express';
-import express from 'express';
-import ProductManager from '../utils/productsManager.js';
+import ProductManagerMongo from '../utils/productsManagerMongo.js';
 
-
-const productManager = new ProductManager()
+const productManagerMongo = new ProductManagerMongo();
 const router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   const limit = req.query.limit;
 
-  productManager.getProducts()
-    .then(products => {
-      if (limit) {
-        products = products.slice(0, limit);
-      }
-      const count = products.length;
-      res.json({ count: count, products: products });
-    })
-    .catch(error => {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    });
-});
+  try {
+    const products = await productManagerMongo.getProducts();
 
+    if (limit) {
+      products = products.slice(0, limit);
+    }
+
+    const count = products.length;
+    res.json({ count, products });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 
 router.get('/:pid', async (req, res) => {
   const id = req.params.pid;
-  const products = await productManager.getProducts();
-  const product = products.find(p => p.id === parseInt(id));
-  if (product) {
-    res.json(product);
-  } else {
-    res.status(404).json({ error: 'Product not found' });
+
+  try {
+    const response = await productManagerMongo.getProductById(id);
+    res.status(response.code).json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
-
 router.post('/', async (req, res) => {
   const { title, description, code, price, stock, thumbnail } = req.body;
+
   if (!title || !description || !code || !price || !stock || !thumbnail) {
-    return res.status(400).json({ error: 'Missing required fields' });
+    return res.status(400).json({ error: 'Faltan campos requeridos' });
   }
+
   try {
-    const addedProduct = await productManager.addProducts({
+    const response = await productManagerMongo.addProduct({
       title,
       description,
       code,
@@ -50,41 +50,45 @@ router.post('/', async (req, res) => {
       stock,
       thumbnail,
     });
-    res.status(201).json(addedProduct[addedProduct.length-1]); 
+
+    res.status(response.code).json(response);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-
 
 router.put('/:pid', async (req, res) => {
-  const id = parseInt(req.params.pid);
-  const { title, description, price, thumbnail, status, code, stock  } = req.body;
-  const updatedFields = { title, description, price, thumbnail, status, code, stock };
-  
+  const id = req.params.pid;
+  const { title, description, price, thumbnail, status, code, stock } = req.body;
+  const updatedFields = {
+    title,
+    description,
+    price,
+    thumbnail,
+    status,
+    code,
+    stock,
+  };
+
   try {
-    const updatedProduct = await productManager.updateProducts(id, updatedFields);
-    res.json(updatedProduct);
+    const response = await productManagerMongo.updateProduct(id, updatedFields);
+    res.status(response.code).json(response);
   } catch (error) {
     console.error(error);
-    res.status(404).json({ error: 'Product not found' });
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
-
 router.delete('/:pid', async (req, res) => {
-  const id = parseInt(req.params.pid);
+  const id = req.params.pid;
+
   try {
-    const deletedProduct = await productManager.deleteProducts(id);
-    if (deletedProduct) {
-      res.json({ success: true, message: 'Product deleted successfully' });
-    } else {
-      res.status(404).json({ error: 'Product not found' });
-    }
+    const response = await productManagerMongo.deleteProduct(id);
+    res.status(response.code).json(response);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
