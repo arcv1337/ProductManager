@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Lista de Productos</title>
+</head>
+<body>
+  <h1>Lista de Productos</h1>
+  {{#each products}}
+    <div>
+      <h2>{{title}}</h2>
+      <p>Precio: {{price}}</p>
+      <p>Descripción: {{description}}</p>
+      <button onclick="addToCart('{{_id}}')">Agregar al Carrito</button>
+      <hr>
+    </div>
+  {{/each}}
+
+  <!-- Paginación -->
+  <div>
+    {{#if hasPrevPage}}
+      <a href="{{prevLink}}">Página anterior</a>
+    {{/if}}
+
+    {{#if hasNextPage}}
+      <a href="{{nextLink}}">Página siguiente</a>
+    {{/if}}
+  </div>
+
+  <script>
+    function addToCart(productId) {
+      // Aquí puedes implementar la lógica para agregar el producto al carrito
+      console.log('Producto agregado al carrito:', productId);
+    }
+  </script>
+</body>
+</html>

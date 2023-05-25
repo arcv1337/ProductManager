@@ -1,25 +1,5 @@
 [
 	{
-		"id": 1,
-		"title": "Camiseta de algodón",
-		"description": "Camiseta de algodón para hombre, disponible en varios colores y tamaños.",
-		"price": 15.99,
-		"thumbnail": "https://example.com/camiseta.jpg",
-		"status": "available",
-		"code": "CT-001",
-		"stock": 50
-	},
-	{
-		"id": 6,
-		"title": "Botas de cuero",
-		"description": "Botas de cuero para hombre, ideales para el invierno o la montaña.",
-		"price": 89.99,
-		"thumbnail": "https://example.com/botas.jpg",
-		"status": "available",
-		"code": "BC-006",
-		"stock": 10
-	},
-	{
 		"id": 7,
 		"title": "Vestido de noche",
 		"description": "Vestido de noche para mujer, elegante y sofisticado.",
@@ -247,6 +227,16 @@
 		"thumbnail": "fdds",
 		"status": true,
 		"code": "343",
+		"stock": "32"
+	},
+	{
+		"id": 26,
+		"title": "fds",
+		"description": "sdsd",
+		"price": "321",
+		"thumbnail": "sad",
+		"status": true,
+		"code": "sadas",
 		"stock": "32"
 	}
 ]
