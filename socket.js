@@ -1,4 +1,4 @@
-import ProductManager from "./src/utils/productsManager.js";
+import ProductManager from "./src/Dao/managers/productsManager.js";
 import http from "http";
 import { Server } from "socket.io";
 

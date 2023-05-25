@@ -1,26 +1,45 @@
 import { Router } from 'express';
-import ProductManagerMongo from '../utils/productsManagerMongo.js';
+import ProductManagerMongo from '../Dao/managers/productsManagerMongo.js';
 
 const productManagerMongo = new ProductManagerMongo();
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const limit = req.query.limit;
-
   try {
-    const products = await productManagerMongo.getProducts();
+    const queryParams = {
+      limit: req.query.limit,
+      page: req.query.page,
+      sort: req.query.sort,
+      query: req.query.query,
+    };
 
-    if (limit) {
-      products = products.slice(0, limit);
-    }
+    const response = await productManagerMongo.getProducts(queryParams);
 
-    const count = products.length;
-    res.json({ count, products });
+    res.status(200).json({
+      status: response.status,
+      payload: response.payload,
+      totalPages: response.totalPages,
+      prevPage: response.prevPage,
+      nextPage: response.nextPage,
+      page: response.page,
+      hasPrevPage: response.hasPrevPage,
+      hasNextPage: response.hasNextPage,
+      prevLink: response.prevLink,
+      nextLink: response.nextLink,
+    });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    res.status(500).json({
+      status: 'error',
+      message: 'Internal Server Error',
+    });
   }
 });
+
+
+
+
+
+
 
 router.get('/:pid', async (req, res) => {
   const id = req.params.pid;
