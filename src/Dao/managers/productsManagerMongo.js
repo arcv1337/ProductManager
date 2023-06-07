@@ -31,7 +31,8 @@ export default class ProductManagerMongo {
       .find(filter)
       .sort(sortOptions)
       .skip((page - 1) * limit)
-      .limit(limit);
+      .limit(limit)
+      .lean(); 
 
     return {
       status: 'success',
